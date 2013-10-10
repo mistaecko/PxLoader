@@ -4,8 +4,8 @@ module.exports = function(grunt) {
     var srcFiles = [
         'PxLoader.js',
         'PxLoaderImage.js',
-        'PxLoaderSound.js',
-        'PxLoaderVideo.js'
+        //'PxLoaderSound.js',
+        //'PxLoaderVideo.js'
     ];
 
     // Project configuration.
@@ -31,7 +31,8 @@ module.exports = function(grunt) {
                 boss: true,
                 eqnull: true,
                 browser: true,
-                globals: {}
+                globals: {},
+                es5: true
             }
         },
         watch: {
@@ -48,6 +49,12 @@ module.exports = function(grunt) {
                 src: ['<%= concat.dist.dest %>'],
                 dest: '<%= pkg.name %>.min.js'
             }
+        },
+        publish: {
+            files: {
+                src: [ 'pxloader-all.js' ],
+                dest: '../'
+            }
         }
     });
 
@@ -57,7 +64,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.renameTask('copy', 'publish');
 
-    grunt.registerTask('default', ['jshint', 'concat', 'uglify']);
+    grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'publish']);
 
 };
